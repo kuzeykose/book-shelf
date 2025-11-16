@@ -326,12 +326,12 @@ export default function SettingsPage() {
         const bookIds = readingStates.map((state: any) => state.bookId);
         const readingProgresses = await fetchReadingProgresses(token, bookIds);
 
+        console.log("Reading progresses:", readingProgresses);
         // Create a map of bookId to reading progress for easy lookup
         const progressMap = new Map<string, ReadingProgress>(
-          readingProgresses.map((progress: ReadingProgress) => [
-            progress.bookId,
-            progress,
-          ])
+          readingProgresses
+            .filter((progress: ReadingProgress) => progress)
+            .map((progress: ReadingProgress) => [progress.bookId, progress])
         );
 
         // Combine reading states with their book data and progress
